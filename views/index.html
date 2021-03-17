@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NSN <%= nsn %></title>
+	<link rel="stylesheet" text="text/css" href="../style.css">
+</head>
+
+<body>
+
+	<div class="sidebar">
+		<h2>Part Numbers for NSN</h2>
+		<h1>
+			<%= nsn %>
+		</h1>
+		<nav>
+			<ul>
+				<li id="view-all" onclick="showAllTables()">View all</li>
+				<% data.forEach(function(product){ %>
+					<li id="<%= product.PART_NUMBER %>" onclick="showTable('<%= product.PART_NUMBER %>')">
+						<%= product.PART_NUMBER %>
+					</li>
+					<% }) %>
+			</ul>
+		</nav>
+	</div>
+
+	<div class="details-container">
+		<% if (nsn === 'XXXX-XX-XXX-XXXX') { %>
+			<p id="invalid-uri">Invalid URI. Try something like 172.105.155.80/XXXX-XX-XXX-XXXX.</p>
+			<% } %>
+		<% if (nsn !== 'XXXX-XX-XXX-XXXX' && data.length === 0) { %>
+			<p id="no-results">Nothing found. Try again!</p>
+			<% } %>
+		<% data.forEach(function(product){ %>
+			<table class="details-table" id="table<%= product.PART_NUMBER %>">
+				<tr>
+					<th colspan="2">NSN <%= nsn %><br>Model or part number <%= product.PART_NUMBER %>
+					</th>
+				</tr>
+				<tr>
+					<td>NIIN:</td>
+					<td>
+						<%= product.NIIN %>
+					</td>
+				</tr>
+				<tr>
+					<td>Name:</td>
+					<td>
+						<%= product.NAME %>
+					</td>
+				</tr>
+				<tr>
+					<td>INC:</td>
+					<td>
+						<%= product.INC %>
+					</td>
+				</tr>
+				<tr>
+					<td>FSC:</td>
+					<td>
+						<%= product.FSC %>
+					</td>
+				</tr>
+				<tr>
+					<td>Publication Date:</td>
+					<td>
+						<%= product.PUBLICATION_DATE %>
+					</td>
+				</tr>
+				<tr>
+					<td>ID:</td>
+					<td>
+						<%= product.ID %>
+					</td>
+				</tr>
+				<tr>
+					<td>Part Number:</td>
+					<td>
+						<%= product.PART_NUMBER %>
+					</td>
+				</tr>
+				<tr>
+					<td>Unpunctuated Part Number:</td>
+					<td>
+						<%= product.UNPUNCTUATED %>
+					</td>
+				</tr>
+				<tr>
+					<td>Cage Code:</td>
+					<td>
+						<%= product.CAGE_CODE %>
+					</td>
+				</tr>
+				<tr>
+					<td>RNCC:</td>
+					<td>
+						<%= product.RNCC %>
+					</td>
+				</tr>
+				<tr>
+					<td>RNVC:</td>
+					<td>
+						<%= product.RNVC %>
+					</td>
+				</tr>
+				<tr>
+					<td>DAC:</td>
+					<td>
+						<%= product.DAC %>
+					</td>
+				</tr>
+				<tr>
+					<td>RNAAC:</td>
+					<td>
+						<%= product.RNAAC %>
+					</td>
+				</tr>
+				<tr>
+					<td>Status:</td>
+					<td>
+						<%= product.STATUS %>
+					</td>
+				</tr>
+				<tr>
+					<td>MSDS:</td>
+					<td>
+						<%= product.MSDS %>
+					</td>
+				</tr>
+				<tr>
+					<td>SADC:</td>
+					<td>
+						<%= product.SADC %>
+					</td>
+				</tr>
+			</table>
+			<% }) %>
+	</div>
+
+	<script>
+		function showTable(partNumber) {
+			var tables = document.getElementsByClassName("details-table");
+			[].forEach.call(tables, function(table) {
+				table.style.display = "none";
+			});
+			var partTable = document.getElementById("table".concat(partNumber));
+			partTable.style.display = '';
+		}
+
+		function showAllTables() {
+			var tables = document.getElementsByClassName("details-table");
+			[].forEach.call(tables, function(table) {
+				table.style.display = '';
+			});
+		}
+	</script>
+
+</body>
+
+</html>
